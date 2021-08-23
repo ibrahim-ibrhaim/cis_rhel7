@@ -1,0 +1,11 @@
+---
+
+- name: " Ensure permissions on /etc/cron.hourly are configured"
+  file:
+    dest: /etc/cron.hourly
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  when:
+  - rhel7cis_rule_5_1_3 
