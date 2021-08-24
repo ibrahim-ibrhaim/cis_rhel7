@@ -1,0 +1,33 @@
+---
+- name: "5.3.14 Ensure only approved MAC algorithms are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^MACs'
+    line: "MACs {{ rhel7cis_sshd['macs'] }}"
+  notify:
+  - restart sshd
+  when:
+  - rhel7cis_rule_5_3_14
+
+- name: "5.3.17 Ensure SSH LoginGraceTime is set to one minute or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^#LoginGraceTime|^LoginGraceTime"
+    line: "LoginGraceTime {{ rhel7cis_sshd['logingracetime'] }}"
+  notify:
+  - restart sshd
+  when:
+  - rhel7cis_rule_5_3_17
+
+- name: "5.3.21 Ensure SSH MaxStartups is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: "^#MaxStartups|^MaxStartups"
+    line: 'MaxStartups 10:30:60'
+  notify:
+  - restart sshd
+  when:
+  - rhel7cis_rule_5_3_21

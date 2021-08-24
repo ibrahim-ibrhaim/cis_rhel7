@@ -1,2 +1,10 @@
 ---
-
+- name: "5.2.3. Ensure sudo log file exists"
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^Defaults    logfile="{{ rhel7cis_varlog_location }}"'
+    line: 'Defaults    logfile="{{ rhel7cis_varlog_location }}"'
+    state: present
+    validate: '/usr/sbin/visudo -cf %s'
+  when:
+  - rhel7cis_rule_5_2_3
