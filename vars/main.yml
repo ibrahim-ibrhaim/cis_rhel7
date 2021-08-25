@@ -1,4 +1,5 @@
 ---
+
 rhel7cis_section1: true
 rhel7cis_section2: true
 rhel7cis_section3: true
@@ -7,9 +8,18 @@ rhel7cis_section5: true
 rhel7cis_section6: true
 
 # Section 5 rules
+rhel7cis_rule_5_1_2: true
 rhel7cis_rule_5_1_3: true
+rhel7cis_rule_5_1_4: true
+rhel7cis_rule_5_1_5: true
+rhel7cis_rule_5_1_6: true
+rhel7cis_rule_5_1_7: true
+rhel7cis_rule_5_2_2: true
 rhel7cis_rule_5_2_3: true
+rhel7cis_rule_5_3_10: true
+rhel7cis_rule_5_3_13: true
 rhel7cis_rule_5_3_14: true
+rhel7cis_rule_5_3_15: true
 rhel7cis_rule_5_3_17: true
 rhel7cis_rule_5_3_21: true
 
@@ -18,7 +28,7 @@ rhel7cis_varlog_location: "/var/log/sudo.log"
 rhel7cis_sshd:
   #clientalivecountmax: 3
   #clientaliveinterval: 300
-  #ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
+  ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
   macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
-  #kex: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
+  kex: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
   logingracetime: 60
