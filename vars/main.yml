@@ -8,27 +8,61 @@ rhel7cis_section5: true
 rhel7cis_section6: true
 
 # Section 5 rules
+rhel7cis_rule_5_1_1: true
 rhel7cis_rule_5_1_2: true
 rhel7cis_rule_5_1_3: true
 rhel7cis_rule_5_1_4: true
 rhel7cis_rule_5_1_5: true
 rhel7cis_rule_5_1_6: true
 rhel7cis_rule_5_1_7: true
+rhel7cis_rule_5_1_8: true
+rhel7cis_rule_5_1_9: true
+rhel7cis_rule_5_2_1: true
 rhel7cis_rule_5_2_2: true
 rhel7cis_rule_5_2_3: true
-rhel7cis_rule_5_3_10: true
+rhel7cis_rule_5_3_1: true
+rhel7cis_rule_5_3_2: true
+rhel7cis_rule_5_3_3: true
+rhel7cis_rule_5_3_4: true
+rhel7cis_rule_5_3_5: true
+rhel7cis_rule_5_3_7: true
+rhel7cis_rule_5_3_8: true
+rhel7cis_rule_5_3_9: true
+rhel7cis_rule_5_3_10: false
+rhel7cis_rule_5_3_11: true
+rhel7cis_rule_5_3_12: true
 rhel7cis_rule_5_3_13: true
 rhel7cis_rule_5_3_14: true
 rhel7cis_rule_5_3_15: true
+rhel7cis_rule_5_3_16: true
 rhel7cis_rule_5_3_17: true
+rhel7cis_rule_5_3_18: true
+rhel7cis_rule_5_3_19: true
 rhel7cis_rule_5_3_21: true
+rhel7cis_rule_5_3_22: true
+rhel7cis_rule_5_4_1: true
+rhel7cis_rule_5_5_1_1: true
+rhel7cis_rule_5_5_1_2: true
+rhel7cis_rule_5_5_1_3: true
+rhel7cis_rule_5_5_3: true
 
 # Section 5 varialbles
+rhel7cis_ssh_loglevel: INFO
+rhel7cis_ssh_maxsessions: 10
 rhel7cis_varlog_location: "/var/log/sudo.log"
 rhel7cis_sshd:
-  #clientalivecountmax: 3
-  #clientaliveinterval: 300
-  ciphers: "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr"
-  macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
-  kex: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
+  clientalivecountmax: 0
+  clientaliveinterval: 900
+  ciphers: "chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,blowfish-cbc,cast128-cbc,3des-cbc"
+  macs: "umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1,hmac-sha1-etm@openssh.com"
+  kex: "curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1"
   logingracetime: 60
+  #allowusers:
+  #allowgroups: 
+  #denyusers:
+  #denygroups:
+
+rhel7cis_pass:
+  max_days: 365
+  min_days: 1
+  warn_age: 7

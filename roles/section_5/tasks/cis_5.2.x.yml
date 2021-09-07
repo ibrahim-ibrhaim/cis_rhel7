@@ -1,5 +1,15 @@
 ---
 
+- name: "5.2.1 Ensure sudo is installed"
+  package:
+    name: sudo
+    state: present
+  become: true
+  when:
+  - rhel7cis_rule_5_2_1
+  vars:
+    ansible_python_interpreter: /bin/python
+
 - name: "5.2.2 Ensure sudo commands use pty"
   lineinfile:
     dest: /etc/sudoers
