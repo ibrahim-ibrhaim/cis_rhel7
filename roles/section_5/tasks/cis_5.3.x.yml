@@ -54,51 +54,51 @@
 
 - name: "5.3.4 Ensure SSH access is limited"
   block:
-  - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for allowusers"
-    lineinfile:
-      state: present
-      dest: /etc/ssh/sshd_config
-      regexp: "^AllowUsers"
-      line: AllowUsers {{ rhel7cis_sshd['allowusers'] }}
-    notify:
-    - restart sshd
-    when:
-    - "rhel7cis_sshd['allowusers']|default('') | length > 0"
+    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for allowusers"
+      lineinfile:
+        state: present
+        dest: /etc/ssh/sshd_config
+        regexp: "^AllowUsers"
+        line: AllowUsers {{ rhel7cis_sshd['allowusers'] }}
+      notify:
+        - restart sshd
+      when:
+        - "rhel7cis_sshd['allowusers']|default('') | length > 0"
 
-  - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for allowgroups"
-    lineinfile:
-      state: present
-      dest: /etc/ssh/sshd_config
-      regexp: "^AllowGroups"
-      line: AllowGroups {{ rhel7cis_sshd['allowgroups'] }}
-    notify:
-    - restart sshd
-    when:
-    - "rhel7cis_sshd['allowgroups']|default('') | length > 0"
+    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for allowgroups"
+      lineinfile:
+        state: present
+        dest: /etc/ssh/sshd_config
+        regexp: "^AllowGroups"
+        line: AllowGroups {{ rhel7cis_sshd['allowgroups'] }}
+      notify:
+        - restart sshd
+      when:
+        - "rhel7cis_sshd['allowgroups']|default('') | length > 0"
 
-  - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for denyusers"
-    lineinfile:
-      state: present
-      dest: /etc/ssh/sshd_config
-      regexp: "^DenyUsers"
-      line: DenyUsers {{ rhel7cis_sshd['denyusers'] }}
-    notify:
-    - restart sshd
-    when:
-    - "rhel7cis_sshd['denyusers']|default('') | length > 0"
+    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for denyusers"
+      lineinfile:
+        state: present
+        dest: /etc/ssh/sshd_config
+        regexp: "^DenyUsers"
+        line: DenyUsers {{ rhel7cis_sshd['denyusers'] }}
+      notify:
+        - restart sshd
+      when:
+        - "rhel7cis_sshd['denyusers']|default('') | length > 0"
 
-  - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for denygroups"
-    lineinfile:
-      state: present
-      dest: /etc/ssh/sshd_config
-      regexp: "^DenyGroups"
-      line: DenyGroups {{ rhel7cis_sshd['denygroups'] }}
-    notify:
-    - restart sshd
-    when:
-    - "rhel7cis_sshd['denygroups']|default('') | length > 0"
+    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for denygroups"
+      lineinfile:
+        state: present
+        dest: /etc/ssh/sshd_config
+        regexp: "^DenyGroups"
+        line: DenyGroups {{ rhel7cis_sshd['denygroups'] }}
+      notify:
+        - restart sshd
+      when:
+        - "rhel7cis_sshd['denygroups']|default('') | length > 0"
   when:
-  - rhel7cis_rule_5_3_4
+    - rhel7cis_rule_5_3_4
 
 - name: "5.3.5 Ensure SSH LogLevel is appropriate"
   lineinfile:
