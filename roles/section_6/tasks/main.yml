@@ -1,0 +1,4 @@
+---
+
+- include: cis_6.1.x.yml
+- include: cis_6.2.x.yml

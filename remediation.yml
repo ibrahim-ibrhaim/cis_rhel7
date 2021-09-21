@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  gather_facts: no
+  gather_facts: yes
   become: yes
   vars_files:
     - vars/main.yml
@@ -17,4 +17,7 @@
         name: section_5
       when: rhel7cis_section5 == true
 
-    
+    - debug: var=rhel7cis_section6
+    - include_role:
+        name: section_6
+      when: rhel7cis_section6 == true
