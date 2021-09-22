@@ -17,4 +17,3 @@
     when: rhel7_6_2_1_shadow is not changed
   when:
   - rhel7cis_rule_6_2_1
-

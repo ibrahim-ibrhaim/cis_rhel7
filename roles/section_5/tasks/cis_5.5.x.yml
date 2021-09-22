@@ -53,3 +53,19 @@
     state: "{{ (rhel7cis_shell_session_timeout.file == '/etc/profile') | ternary('present', 'absent') }}"
   when:
   - rhel7cis_rule_5_5_4
+
+- name: "5.5.5 Ensure default user umask is configured"
+  block:
+  - name: "5.5.5 Ensure default user umask is configured | Set umask for /etc/bashrc"
+    replace:
+      path: /etc/bashrc
+      regexp: '(^\s+umask) 002'
+      replace: '\1 027'
+
+  - name: "5.5.5 Ensure default user umask is configured | Set umask for /etc/profile"
+    replace:
+      path: /etc/profile
+      regexp: '(^\s+umask) 002'
+      replace: '\1 027'
+  when:
+  - rhel7cis_rule_5_5_5
