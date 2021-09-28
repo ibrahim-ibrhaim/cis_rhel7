@@ -3,9 +3,12 @@
 rhel7cis_section1: true
 rhel7cis_section2: true
 rhel7cis_section3: true
-rhel7cis_section4: true
-rhel7cis_section5: true
+rhel7cis_section4: false
+rhel7cis_section5: false
 rhel7cis_section6: true
+
+# Section 1 rules
+
 
 # Section 4 rules
 rhel7cis_rule_4_2_1_1: true
@@ -75,6 +78,12 @@ rhel7cis_rule_6_1_12: true
 rhel7cis_rule_6_1_13: true
 rhel7cis_rule_6_1_14: true
 rhel7cis_rule_6_2_1: false
+rhel7cis_rule_6_2_3: true
+rhel7cis_rule_6_2_4: true
+rhel7cis_rule_6_2_5: true
+rhel7cis_rule_6_2_6: true
+rhel7cis_rule_6_2_7: true
+rhel7cis_rule_6_2_8: true
 
 # Section 4 variables
 rhel7cis_syslog: rsyslog

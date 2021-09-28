@@ -17,3 +17,124 @@
     when: rhel7_6_2_1_shadow is not changed
   when:
   - rhel7cis_rule_6_2_1
+
+- name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group"
+  block:
+  - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Check /etc/passwd entries"
+    shell: pwck -r | grep 'no group' | awk '{ gsub("[:\47]",""); print $2}'
+    changed_when: no
+    failed_when: no
+    check_mode: no
+    register: passwd_gid_check
+
+  - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Print message that all groups match between passwd and group files"
+    debug:
+      msg: "Good News! There are no users that have non-existent GUIDs (Groups)"
+    when: "'passwd_gid_check.stdout' is not defined"
+
+  - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Print warning about users with invalid GIDs missing GID entries in /etc/group"
+    debug:
+      msg: "WARNING: The following users have non-existent GIDs (Groups): {{ passwd_gid_check.stdout_lines | join (', ') }}"
+    when: "'passwd_gid_check.stdout' is defined"
+  when:
+  - rhel7cis_rule_6_2_3
+
+- name: "6.2.4 Ensure shadow group is empty"
+  block:
+      - name: "6.2.4 Ensure shadow group is empty"
+        shell: "grep ^shadow:[^:]*:[^:]*:[^:]+ /etc/group"
+        changed_when: no
+        failed_when: no
+        register: users_in_shadow_group
+
+      - name: "6.2.4 Ensure shadow group is empty | Print no user in shadow group"
+        debug:
+            msg: "Good News! There are no users in the shadow group"
+        when: users_in_shadow_group.stdout is undefined
+
+      - name: "6.2.4 Ensure shadow group is empty | Print no user in shadow group"
+        debug:
+            msg: "WARNING: The following users are in the shadow group: {{ users_in_shadow_group.stdout_lines }}"
+        when: users_in_shadow_group.stdout is defined
+  when:
+      - rhel7cis_rule_6_2_4
+
+- name: "6.2.5 Ensure no duplicate user names exist"
+  block:
+      - name: "6.2.5 Ensure no duplicate user names exist | Check for duplicate user names"
+        shell: "pwck -r | awk -F: '{if ($1 in users) print $1 ; else users[$1]}' /etc/passwd"
+        changed_when: no
+        failed_when: no
+        register: user_username_check
+
+      - name: "6.2.5 Ensure no duplicate user names exist | Print message that no duplicate user names exist"
+        debug:
+            msg: "Good News! There are no duplicate user names in the system"
+        when: user_username_check.stdout is undefined
+
+      - name: "6.2.5 Ensure no duplicate user names exist | Print warning about users with duplicate User Names"
+        debug:
+            msg: "WARNING: The following user names are duplicates: {{ user_username_check.stdout_lines }}"
+        when: user_username_check.stdout is defined
+  when:
+      - rhel7cis_rule_6_2_5
+
+- name: "6.2.6 Ensure no duplicate group names exist"
+  block:
+  - name: "6.2.6 Ensure no duplicate group names exist | Check for duplicate group names"
+    shell: 'getent passwd | cut -d: -f1 | sort -n | uniq -d'
+    changed_when: no
+    failed_when: no
+    register: group_group_check
+
+  - name: "6.2.6 Ensure no duplicate group names exist | Print message that no duplicate groups exist"
+    debug:
+      msg: "Good News! There are no duplicate group names in the system"
+    when: group_group_check.stdout is defined
+
+  - name: "6.2.6 Ensure no duplicate group names exist | Print warning about users with duplicate group names"
+    debug:
+      msg: "Warning: The following group names are duplicates: {{ group_group_check.stdout_lines }}"
+    when: group_group_check.stdout is not defined
+  when:
+  - rhel7cis_rule_6_2_6
+
+- name: "6.2.7 Ensure no duplicate UIDs exist"
+  block:
+  - name: "6.2.7 Ensure no duplicate UIDs exist | Check for duplicate UIDs"
+    shell: "pwck -r | awk -F: '{if ($3 in uid) print $1 ; else uid[$3]}' /etc/passwd"
+    changed_when: no
+    failed_when: no
+    register: user_uid_check
+
+  - name: "6.2.7 Ensure no duplicate UIDs exist | Print message that no duplicate UIDs exist"
+    debug:
+      msg: "Good News! There are no duplicate UID's in the system"
+    when: user_uid_check.stdout is not defined
+
+  - name: "6.2.7 Ensure no duplicate UIDs exist | Print warning about users with duplicate UIDs"
+    debug:
+      msg: "Warning: The following users have UIDs that are duplicates: {{ user_uid_check.stdout_lines }}"
+    when: user_uid_check.stdout is defined
+  when:
+  - rhel7cis_rule_6_2_7
+
+- name: "6.2.8 Ensure no duplicate GIDs exist"
+  block:
+  - name: "6.2.8 Ensure no duplicate GIDs exist | Check for duplicate GIDs"
+    shell: "pwck -r | awk -F: '{if ($3 in users) print $1 ; else users[$3]}' /etc/group"
+    changed_when: no
+    failed_when: no
+    register: user_user_check
+
+  - name: "6.2.8 Ensure no duplicate GIDs exist | Print message that no duplicate GID's exist"
+    debug:
+      msg: "Good News! There are no duplicate GIDs in the system"
+    when: user_user_check.stdout is not defined
+
+  - name: "6.2.8 Ensure no duplicate GIDs exist | Print warning about users with duplicate GIDs"
+    debug:
+      msg: "Warning: The following groups have duplicate GIDs: {{ user_user_check.stdout_lines }}"
+    when: user_user_check.stdout is defined
+  when:
+  - rhel7cis_rule_6_2_8
