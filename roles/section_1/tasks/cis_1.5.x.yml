@@ -1,0 +1,25 @@
+---
+
+- name: "1.5.2 Ensure XD/NX support is enabled"
+  shell: dmesg|grep -E "NX|XD" | grep " active"
+  changed_when: no
+  when:
+      - rhel7cis_rule_1_5_2
+
+- name: "1.5.3 Ensure address space layout randomization (ASLR) is enabled"
+  sysctl:
+      name: kernel.randomize_va_space
+      value: '2'
+      state: present
+      reload: yes
+      sysctl_set: yes
+      ignoreerrors: yes
+  when:
+      - rhel7cis_rule_1_5_3
+
+- name: "1.5.4 Ensure prelink is not installed"
+  package:
+      name: prelink
+      state: absent
+  when:
+      - rhel7cis_rule_1_5_4
