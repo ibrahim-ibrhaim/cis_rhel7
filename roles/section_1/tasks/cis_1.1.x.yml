@@ -34,27 +34,6 @@
   when:
       - rhel7cis_rule_1_1_1_3
 
-- name: "1.1.2 Ensure /tmp is configured"
-  block:
-      - name: "1.1.2 Ensure /tmp is configured | Absent"
-        debug:
-            msg: "WARNING: {{ required_mount }} doesn't exist. This is a manual task"
-        register: tmp_mount_absent
-        changed_when: tmp_mount_absent.skipped is undefined
-        when:
-            - required_mount not in mount_names
-
-      - name: "1.1.2 Ensure /tmp is configured | Present"
-        debug:
-            msg: "Congratulations: {{ required_mount }} exists."
-        register: tmp_mount_present
-        when:
-            - required_mount in mount_names
-  vars:
-      required_mount: '/tmp'
-  when:
-      - rhel7cis_rule_1_1_2
-
 - name: "1.1.24 Disable USB Storage"
   block:
       - name: "1.1.24 Disable USB Storage | Edit modprobe config"
