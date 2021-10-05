@@ -89,11 +89,16 @@ rhel7cis_rule_6_2_6: true
 rhel7cis_rule_6_2_7: true
 rhel7cis_rule_6_2_8: true
 
-# Section 4 variables
+
+## Section 1 variables
+# RedHat Satellite Subscription items
+rhel7cis_rhnsd_required: false
+
+## Section 4 variables
 rhel7cis_syslog: rsyslog
 rhel7cis_system_is_log_server: false
 
-# Section 5 varialbles
+## Section 5 varialbles
 rhel7cis_ssh_loglevel: INFO
 rhel7cis_ssh_maxsessions: 10
 rhel7cis_varlog_location: "/var/log/sudo.log"
@@ -120,7 +125,7 @@ rhel7cis_shell_session_timeout:
 
 rhel7cis_sugroup: sugroup
 
-# Section 6 varialbles
+## Section 6 varialbles
 # RHEL-07_6.1.10 Allow ansible to adjust world-writable files. False will just display world-writable files, True will remove world-writable
 rhel7cis_no_world_write_adjust: true
 
