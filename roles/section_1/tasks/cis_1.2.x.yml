@@ -13,3 +13,20 @@
             - ansible_distribution == "CentOS"
   when:
       - rhel7cis_rule_1_2_1
+
+- name: "1.2.2 Ensure package manager repositories are configured"
+  block:
+      - name: "1.2.2 Ensure package manager repositories are configured"
+        shell: yum repolist
+        changed_when: no
+        register: repolist
+        tags:
+            - skip_ansible_lint
+
+      - name: "1.2.2 Ensure package manager repositories are configured"
+        debug:
+            msg:
+                - "Please check against site policy repos listed below match expected:"
+                - "{{ repolist.stdout_lines }}"
+  when:
+      - rhel7cis_rule_1_2_2
