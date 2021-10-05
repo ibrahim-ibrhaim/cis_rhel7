@@ -19,7 +19,6 @@
       - name: "1.2.2 Ensure package manager repositories are configured"
         shell: yum repolist
         changed_when: no
-        warn: false
         register: repolist
 
       - name: "1.2.2 Ensure package manager repositories are configured"
