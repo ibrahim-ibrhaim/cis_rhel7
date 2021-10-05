@@ -7,7 +7,11 @@
   handlers:
     - include: handlers/main.yml
   tasks:
-  
+    - debug: var=rhel7cis_section1
+    - include_role:
+        name: section_1
+      when: rhel7cis_section1 == true
+
     - debug: var=rhel7cis_section4
     - include_role:
         name: section_4
