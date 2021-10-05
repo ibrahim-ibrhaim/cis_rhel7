@@ -55,7 +55,7 @@
       - ansible_distribution == "RedHat"
       - rhel7cis_rule_1_2_4
 
-- name: "1.2.5 | L1 | PATCH | Disable the rhnsd Daemon"
+- name: "1.2.5 Disable the rhnsd Daemon"
   service:
       name: rhnsd
       state: stopped
