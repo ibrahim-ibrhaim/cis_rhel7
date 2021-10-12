@@ -1,3 +1,4 @@
 ---
 
 - include: cis_2.1.x.yml
+- include: cis_2.2.x.yml
