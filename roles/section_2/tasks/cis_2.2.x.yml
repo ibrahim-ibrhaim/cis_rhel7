@@ -8,3 +8,25 @@
           - "xorg-x11*"
   when:
       - rhel7cis_rule_2_2_2
+
+- name: "2.2.3 Ensure Avahi Server is not installed"
+  service:
+      name: avahi-daemon
+      state: stopped
+      enabled: no
+  when:
+      - rhel7cis_rule_2_2_3
+
+- name: "2.2.4 Ensure CUPS is not installed"
+  package:
+      name: cups
+      state: absent
+  when:
+      - rhel7cis_rule_2_2_4
+
+- name: "2.2.5 Ensure DHCP Server is not installed"
+  package:
+      name: dhcp
+      state: absent
+  when:
+      - rhel7cis_rule_2_2_5
