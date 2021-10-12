@@ -1,0 +1,31 @@
+---
+
+- name: "1.7.4 Ensure permissions on /etc/motd are configured"
+  file:
+      dest: /etc/motd
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  when:
+      - rhel7cis_rule_1_7_4
+
+- name: "1.7.5 Ensure permissions on /etc/issue are configured"
+  file:
+      dest: /etc/issue
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  when:
+      - rhel7cis_rule_1_7_5
+  
+- name: "1.7.6 Ensure permissions on /etc/issue.net are configured"
+  file:
+      dest: /etc/issue.net
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  when:
+      - rhel7cis_rule_1_7_6

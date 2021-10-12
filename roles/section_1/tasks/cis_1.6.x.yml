@@ -30,3 +30,36 @@
       - rhel7cis_rule_1_6_1_3
       - rhel7cis_rule_1_6_1_4
 
+- name: "1.6.1.6 Ensure no unconfined services exist"
+  block:
+      - name: "1.6.1.6 Ensure no unconfined services exist | Find the unconfined services"
+        shell: ps -eZ | grep unconfined_service_t
+        register: rhelcis_1_6_1_6_unconf_services
+        failed_when: no
+        changed_when: no
+
+      - name: "1.6.1.6 Ensure no unconfined services exist | Message on no unconfined services"
+        debug:
+            msg: "Good News! There are no unconfined services found on your system"
+        when: rhelcis_1_6_1_6_unconf_services.stdout | length == 0
+
+      - name: "1.6.1.6 Ensure no unconfined services exist | Message on unconfined services"
+        debug:
+            msg: "Warning! You have unconfined services: {{ rhelcis_1_6_1_6_unconf_services.stdout_lines }}"
+        when: rhelcis_1_6_1_6_unconf_services.stdout | length > 0
+  when:
+      - rhel7cis_rule_1_6_1_6
+
+- name: "1.6.1.7 Ensure SETroubleshoot is not installed"
+  package:
+      name: setroubleshoot
+      state: absent
+  when:
+      - rhel7cis_rule_1_6_1_7
+
+- name: "1.6.1.8 Ensure the MCS Translation Service (mcstrans) is not installed"
+  package:
+      name: mcstrans
+      state: absent
+  when:
+      - rhel7cis_rule_1_6_1_8

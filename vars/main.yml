@@ -17,6 +17,7 @@ rhel7cis_rule_1_2_3: true
 rhel7cis_rule_1_2_4: true
 rhel7cis_rule_1_2_5: true
 rhel7cis_rule_1_3_1: true
+rhel7cis_rule_1_3_2: true
 rhel7cis_rule_1_5_2: true
 rhel7cis_rule_1_5_3: true
 rhel7cis_rule_1_5_4: true
@@ -24,6 +25,12 @@ rhel7cis_rule_1_6_1_1: true
 rhel7cis_rule_1_6_1_2: true
 rhel7cis_rule_1_6_1_3: true
 rhel7cis_rule_1_6_1_4: true
+rhel7cis_rule_1_6_1_6: true
+rhel7cis_rule_1_6_1_7: true
+rhel7cis_rule_1_6_1_8: true
+rhel7cis_rule_1_7_4: true
+rhel7cis_rule_1_7_5: true
+rhel7cis_rule_1_7_6: true
 
 # Section 4 rules
 rhel7cis_rule_4_2_1_1: true
@@ -103,10 +110,22 @@ rhel7cis_rule_6_2_8: true
 ## Section 1 variables
 # RedHat Satellite Subscription items
 rhel7cis_rhnsd_required: false
-rhel7cis_config_aide: true
 rhel7cis_selinux_disable: false
 rhel7cis_selinux_state: enforcing
 rhel7cis_selinux_pol: targeted
+
+# AIDE
+rhel7cis_config_aide: true
+# AIDE cron settings
+rhel7cis_aide_cron:
+    cron_user: root
+    cron_file: /etc/crontab
+    aide_job: '/usr/sbin/aide --check'
+    aide_minute: '0'
+    aide_hour: '5'
+    aide_day: '*'
+    aide_month: '*'
+    aide_weekday: '*'
 
 ## Section 4 variables
 rhel7cis_syslog: rsyslog
