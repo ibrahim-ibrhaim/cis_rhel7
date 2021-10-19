@@ -1,4 +1,11 @@
 ---
+
+- name: restart postfix
+  become: yes
+  service:
+      name: postfix
+      state: restarted
+
 - name: restart sshd
   become: yes
   service:

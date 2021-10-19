@@ -66,3 +66,67 @@
       ansible_python_interpreter: /bin/python
   when:
       - rhel7cis_rule_2_2_9
+
+- name: "2.2.10 Ensure IMAP and POP3 server is not installed"
+  package:
+      name: dovecot
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_10
+
+- name: "2.2.11 Ensure Samba server is not installed"
+  package:
+      name: samba
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_11
+
+- name: "2.2.12 Ensure HTTP Proxy server is not installed"
+  package:
+      name: squid
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_12
+
+- name: "2.2.13 Ensure net-snmp is not installed"
+  package:
+      name: net-snmp
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_13
+
+- name: "2.2.14 Ensure NIS server is not installed"
+  package:
+      name: ypserv
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_14
+
+- name: "2.2.15 Ensure telnet-server is not installed"
+  package:
+      name: telnet-server
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_15
+
+- name: "2.2.16 Ensure mail transfer agent is configured for local-only mode"
+  lineinfile:
+      dest: /etc/postfix/main.cf
+      regexp: "^(#)?inet_interfaces"
+      line: "inet_interfaces = loopback-only"
+  notify: restart postfix
+  when:
+      - rhel7cis_rule_2_2_16
+
