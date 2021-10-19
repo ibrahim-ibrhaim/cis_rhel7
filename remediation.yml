@@ -12,6 +12,16 @@
         name: section_1
       when: rhel7cis_section1 == true
 
+    - debug: var=rhel7cis_section2
+    - include_role:
+        name: section_2
+      when: rhel7cis_section2 == true
+
+    - debug: var=rhel7cis_section3
+    - include_role:
+        name: section_3
+      when: rhel7cis_section3 == true
+
     - debug: var=rhel7cis_section4
     - include_role:
         name: section_4
