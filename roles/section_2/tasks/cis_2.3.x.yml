@@ -1,0 +1,46 @@
+---
+
+- name: "2.3.1 Ensure NIS client is not installed"
+  package:
+      name: ypbind
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_3_1
+
+- name: "2.3.2 Ensure rsh client is not installed"
+  package:
+      name: rsh
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_3_2
+
+- name: "2.3.3 Ensure talk client is not installed"
+  package:
+      name: talk
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_3_3
+
+- name: "2.3.4 Ensure telnet client is not installed"
+  package:
+      name: telnet
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_3_4
+
+- name: "2.3.5 Ensure LDAP client is not installed"
+  package:
+      name: openldap-client
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_3_5

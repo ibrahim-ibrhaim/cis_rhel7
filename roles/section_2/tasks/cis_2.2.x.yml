@@ -30,3 +30,39 @@
       state: absent
   when:
       - rhel7cis_rule_2_2_5
+
+- name: "2.2.6 Ensure LDAP server is not installed"
+  package:
+      name: openldap-servers
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_6
+
+- name: "2.2.7 Ensure DNS server is not installed"
+  package:
+      name: bind
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_7
+
+- name: "2.2.8 Ensure FTP server is not installed"
+  package:
+      name: vsftpd
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_8
+
+- name: "2.2.9 Ensure HTTP server is not installed"
+  package:
+      name: httpd
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_2_2_9
