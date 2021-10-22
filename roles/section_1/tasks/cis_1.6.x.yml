@@ -42,11 +42,13 @@
         debug:
             msg: "Good News! There are no unconfined services found on your system"
         when: rhelcis_1_6_1_6_unconf_services.stdout | length == 0
-
+        ignore_errors: "{{ ansible_check_mode }}"
+        
       - name: "1.6.1.6 Ensure no unconfined services exist | Message on unconfined services"
         debug:
             msg: "Warning! You have unconfined services: {{ rhelcis_1_6_1_6_unconf_services.stdout_lines }}"
         when: rhelcis_1_6_1_6_unconf_services.stdout | length > 0
+        ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_1_6_1_6
 

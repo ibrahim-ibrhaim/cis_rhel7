@@ -20,12 +20,15 @@
         shell: yum repolist
         changed_when: no
         register: repolist
+        args:
+          warn: no
 
       - name: "1.2.2 Ensure package manager repositories are configured"
         debug:
             msg:
                 - "Please check against site policy repos listed below match expected:"
-                - "{{ repolist }}"
+                - "{{ repolist.stdout_lines }}"
+        ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_1_2_2
 
