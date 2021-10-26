@@ -34,6 +34,26 @@
   when:
       - rhel7cis_rule_1_1_1_3
 
+- name: "1.1.6 Ensure /dev/shm is configured"
+  block:
+      - name: "1.1.6 Ensure separate partition exists for {{ required_mount }} | Absent"
+        debug:
+            msg: "Warning! {{ required_mount }} doesn't exist. This is a manual task"
+        register: dev_shm_mount_absent
+        changed_when: dev_shm_mount_absent.skipped is undefined
+        when:
+            - required_mount not in mount_names
+      - name: "1.1.6 Ensure separate partition exists for {{ required_mount }} | Present"
+        debug:
+            msg: "Congratulations: {{ required_mount }} exists."
+        register: dev_shm_mount_present
+        when:
+            - required_mount in mount_names
+  vars:
+      required_mount: '/dev/shm'
+  when:
+      - rhel7cis_rule_1_1_6
+
 - name: "1.1.24 Disable USB Storage"
   block:
       - name: "1.1.24 Disable USB Storage | Edit modprobe config"

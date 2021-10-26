@@ -1,5 +1,14 @@
 ---
 
+- name: "6.2.2 Ensure /etc/shadow password fields are not empty"
+  command: passwd -l {{ item }}
+  changed_when: no
+  failed_when: no
+  loop: "{{ empty_password_accounts.stdout_lines }}"
+  when:
+      - empty_password_accounts.rc
+      - rhel7cis_rule_6_2_2
+
 - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group"
   block:
   - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Check /etc/passwd entries"
@@ -120,3 +129,105 @@
     when: user_user_check.stdout is defined
   when:
   - rhel7cis_rule_6_2_8
+
+- name: "6.2.9 Ensure root is the only UID 0 account"
+  command: passwd -l {{ item }}
+  changed_when: no
+  failed_when: no
+  loop: "{{ uid_zero_accounts_except_root.stdout_lines }}"
+  when:
+      - uid_zero_accounts_except_root.rc
+      - rhel7cis_rule_6_2_9
+
+- name: "6.2.10 Ensure root PATH Integrity"
+  block:
+      - name: "6.2.10 Ensure root PATH Integrity | Determine empty value"
+        shell: 'echo $PATH | grep ::'
+        become: yes
+        register: path_colon
+        changed_when: False
+        failed_when: path_colon.rc == 0
+
+      - name: "6.2.10 Ensure root PATH Integrity | Determin colon end"
+        shell: 'echo $PATH | grep :$'
+        become: yes
+        register: path_colon_end
+        changed_when: False
+        failed_when: path_colon_end.rc == 0
+
+      - name: "6.2.10 Ensure root PATH Integrity | Determine dot in path"
+        shell: "/bin/bash --login -c 'env | grep ^PATH=' | grep ^PATH | sed -e 's/PATH=//' -e 's/::/:/' -e 's/:$//' -e 's/:/\\n/g'"
+        become: yes
+        register: dot_in_path
+        changed_when: False
+        failed_when: '"." in dot_in_path.stdout_lines'
+
+      - name: "6.2.10 Ensure root PATH Integrity | Alert on empty value, colon end, and dot in path"
+        debug:
+            msg:
+                - "The following paths have an empty value: {{ path_colon.stdout_lines }}"
+                - "The following paths have colon end: {{ path_colon_end.stdout_lines }}"
+                - "The following paths have a dot in the path: {{ dot_in_path.stdout_lines }}"
+
+      - name: "6.2.10 Ensure root PATH Integrity | Determine rights and owner"
+        file: >
+            path='{{ item }}'
+            follow=yes
+            state=directory
+            owner=root
+            mode='o-w,g-w'
+        loop: "{{ dot_in_path.stdout_lines }}"
+  when:
+      - rhel7cis_rule_6_2_10
+
+- name: "6.2.14 Ensure users' dot files are not group or world-writable"
+  block:
+      - name: "6.2.14 Ensure users' dot files are not group or world-writable | Check for files"
+        shell: find /home/ -name "\.*" -perm /g+w,o+w
+        become: yes
+        changed_when: no
+        failed_when: no
+        register: rhel7cis_6_2_14_audit
+
+      - name: "6.2.14 Ensure users' dot files are not group or world-writable | Alert on files found"
+        debug:
+            msg: "Good news! We have not found any group or world-writable dot files on your sytem"
+        failed_when: false
+        changed_when: false
+        when:
+            - rhel7cis_6_2_14_audit.stdout is not defined
+
+      - name: "6.2.14 Ensure users' dot files are not group or world-writable | Changes files if configured"
+        file:
+            path: '{{ item }}'
+            mode: go-w
+        with_items: "{{ rhel7cis_6_2_14_audit.stdout_lines }}"
+        when:
+            - rhel7cis_6_2_14_audit.stdout is defined
+            - rhel7cis_dotperm_ansiblemanaged
+  when:
+      - rhel7cis_rule_6_2_14
+
+- name: "6.2.15 Ensure no users have .forward files"
+  file:
+      state: absent
+      dest: "~{{ item }}/.forward"
+  loop: "{{ users.stdout_lines }}"
+  when:
+      - rhel7cis_rule_6_2_15
+
+- name: "6.2.16 Ensure no users have .netrc files"
+  file:
+      state: absent
+      dest: "~{{ item }}/.netrc"
+  with_items: "{{ users.stdout_lines }}"
+  when:
+      - rhel7cis_rule_6_2_16
+
+- name: "6.2.17 Ensure no users have .rhosts files"
+  file:
+      state: absent
+      dest: "~{{ item }}/.rhosts"
+  with_items: "{{ users.stdout_lines }}"
+  when:
+      - rhel7cis_rule_6_2_17
