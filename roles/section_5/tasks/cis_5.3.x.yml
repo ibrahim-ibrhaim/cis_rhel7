@@ -54,7 +54,7 @@
 
 - name: "5.3.4 Ensure SSH access is limited"
   block:
-    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for allowusers"
+    - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for allowusers"
       lineinfile:
         state: present
         dest: /etc/ssh/sshd_config
@@ -65,7 +65,7 @@
       when:
         - "rhel7cis_sshd['allowusers']|default('') | length > 0"
 
-    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for allowgroups"
+    - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for allowgroups"
       lineinfile:
         state: present
         dest: /etc/ssh/sshd_config
@@ -76,7 +76,7 @@
       when:
         - "rhel7cis_sshd['allowgroups']|default('') | length > 0"
 
-    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for denyusers"
+    - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for denyusers"
       lineinfile:
         state: present
         dest: /etc/ssh/sshd_config
@@ -87,7 +87,7 @@
       when:
         - "rhel7cis_sshd['denyusers']|default('') | length > 0"
 
-    - name: "5.3.4 | L1 | PATCH | Ensure SSH access is limited | Add line to sshd_config for denygroups"
+    - name: "5.3.4 Ensure SSH access is limited | Add line to sshd_config for denygroups"
       lineinfile:
         state: present
         dest: /etc/ssh/sshd_config

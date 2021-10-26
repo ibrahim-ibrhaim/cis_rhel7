@@ -9,15 +9,15 @@
     check_mode: no
     register: passwd_gid_check
 
-  - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Print message that all groups match between passwd and group files"
-    debug:
-      msg: "Good News! There are no users that have non-existent GUIDs (Groups)"
-    when: "'passwd_gid_check.stdout' is not defined"
-
   - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Print warning about users with invalid GIDs missing GID entries in /etc/group"
     debug:
       msg: "WARNING: The following users have non-existent GIDs (Groups): {{ passwd_gid_check.stdout_lines | join (', ') }}"
-    when: "'passwd_gid_check.stdout' is defined"
+    when: passwd_gid_check.stdout is defined
+
+  - name: "6.2.3 Ensure all groups in /etc/passwd exist in /etc/group | Print message that all groups match between passwd and group files"
+    debug:
+      msg: "Good News! There are no users that have non-existent GUIDs (Groups)"
+    when: passwd_gid_check.stdout is undefined
   when:
   - rhel7cis_rule_6_2_3
 
