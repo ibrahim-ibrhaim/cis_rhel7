@@ -1,20 +1,38 @@
 ---
 
 - name: "5.5.1.1 Ensure password expiration is 365 days or less"
-  lineinfile:
-    state: present
-    dest: /etc/login.defs
-    regexp: '^PASS_MAX_DAYS'
-    line: "PASS_MAX_DAYS {{ rhel7cis_pass['max_days'] }}"
+  block:
+    - name: "5.5.1.1 Ensure password expiration is 365 days or less | Set parameter in login.defs"
+      lineinfile:
+        state: present
+        dest: /etc/login.defs
+        regexp: '^PASS_MAX_DAYS'
+        line: "PASS_MAX_DAYS {{ rhel7cis_pass['max_days'] }}"
+
+    - name: "5.5.1.1 Ensure password expiration is 365 days or less | Find users"
+      shell: "grep -E '^[^:]+:[^!*]' /etc/shadow | cut -d: -f1"
+      register: users
+    
+    - name: "5.5.1.1 Ensure password expiration is 365 days or less | Modify user parameter"
+      command: chage --maxdays 365 {{ item }}
+      loop: "{{ users.stdout_lines }}"
+      ignore_errors: "{{ ansible_check_mode }}"
   when:
   - rhel7cis_rule_5_5_1_1
 
 - name: "5.5.1.2 Ensure minimum days between password changes is configured"
-  lineinfile:
-    state: present
-    dest: /etc/login.defs
-    regexp: '^PASS_MIN_DAYS'
-    line: "PASS_MIN_DAYS {{ rhel7cis_pass['min_days'] }}"
+  block:
+    - name: "5.5.1.2 Ensure minimum days between password changes is configured | Set parameter in login.defs"
+      lineinfile:
+        state: present
+        dest: /etc/login.defs
+        regexp: '^PASS_MIN_DAYS'
+        line: "PASS_MIN_DAYS {{ rhel7cis_pass['min_days'] }}"
+    
+    - name: "5.5.1.2 Ensure minimum days between password changes is configured | Modify user parameter"
+      command: "chage --mindays 1 {{ item }}"
+      loop: "{{ users.stdout_lines }}"
+      ignore_errors: "{{ ansible_check_mode }}"
   when:
   - rhel7cis_rule_5_5_1_2
 

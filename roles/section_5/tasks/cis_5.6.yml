@@ -11,9 +11,8 @@
   - name: "5.6 Ensure root login is restricted to system console"
     debug:
       msg:
-      - "These are the consoles with root login access, please review:"
-      # - "{{ rhel_07_5_6_audit.stdout_lines }}"
-      - "{{ rhel_07_5_6_audit }}"
+        - "These are the consoles with root login access, please review:"
+        - "{{ rhel_07_5_6_audit.stdout_lines }}"
+    ignore_errors: "{{ ansible_check_mode }}"
   when:
   - rhel7cis_rule_5_6
-
