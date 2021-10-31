@@ -1,0 +1,32 @@
+---
+
+- name: "3.5.3.1.1 Ensure iptables packages are installed"
+  package:
+      name: "{{ item }}"
+      state: present
+  loop:
+      - iptables
+      - iptables-services
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_3_1_1
+
+- name: "3.5.3.1.2 Ensure nftables is not installed with iptables"
+  package:
+      name: nftables
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_3_1_2
+
+- name: "3.5.3.1.3 Ensure firewalld is either not installed or masked with iptables"
+  package:
+      name: firewalld
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_3_1_3
+

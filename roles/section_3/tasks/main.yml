@@ -1,3 +1,8 @@
 ---
 
 - include: cis_3.1.x.yml
+- include: cis_3.2.x.yml
+- include: cis_3.3.x.yml
+- include: cis_3.5.1.x.yml
+- include: cis_3.5.2.x.yml
+- include: cis_3.5.3.x.yml

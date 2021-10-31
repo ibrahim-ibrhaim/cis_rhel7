@@ -1,0 +1,41 @@
+---
+
+- name: "3.5.2.1 Ensure nftables is installed"
+  package:
+      name: nftables
+      state: present
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_2_1
+
+- name: "3.5.2.2 Ensure firewalld is either not installed or masked with nftables"
+  package:
+      name: firewalld
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_2_2
+
+- name: "3.5.2.3 Ensure iptables-services not installed with nftables"
+  package:
+      name: iptables-services
+      state: absent
+  vars:
+      ansible_python_interpreter: /bin/python
+  when:
+      - rhel7cis_rule_3_5_2_3
+
+- name: "3.5.2.4 Ensure iptables are flushed with nftables"
+  block:
+      - name: "3.5.2.4 Ensure iptables are flushed with nftables | Flush IPv4 tables"
+        command: iptables -F
+
+      - name: "3.5.2.4 Ensure iptables are flushed with nftables | Flush IPv6 tables"
+        command: ip6tables -F
+        when:
+            - rhel7cis_ipv6_required
+  when:
+      - rhel7cis_firewall != "iptables"
+      - rhel7cis_rule_3_5_2_4
