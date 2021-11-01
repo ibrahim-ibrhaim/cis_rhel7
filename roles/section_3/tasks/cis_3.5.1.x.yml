@@ -55,6 +55,7 @@
         register: rhel7cis_3_5_1_6_interfacepolicy
         changed_when: no
         become: yes
+        ignore_errors: true
 
       - name: "3.5.1.6 Ensure network interfaces are assigned to appropriate zone | Get list of interfaces and policies | Show the interface to policy"
         debug:
