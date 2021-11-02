@@ -60,15 +60,6 @@
   set_fact:
       mount_names: "{{ ansible_mounts | map(attribute='mount') | list }}"
 
-- name: "PRELIM | Section 1.7 | Ensure SELinux is installed"
-  package:
-      name: libselinux
-      state: present
-  when:
-  - not rhel7cis_selinux_disable
-  vars:
-      ansible_python_interpreter: /bin/python
-
 - name: "PRELIM | Section 4.1 | Configure System Accounting (auditd)"
   package:
       name: audit

@@ -54,6 +54,13 @@
   when:
       - rhel7cis_rule_1_1_6
 
+- name: "1.1.23 Disable Automounting"
+  package:
+      name: autofs
+      state: absent
+  when:
+      - rhel7cis_rule_1_1_23
+
 - name: "1.1.24 Disable USB Storage"
   block:
       - name: "1.1.24 Disable USB Storage | Edit modprobe config"
