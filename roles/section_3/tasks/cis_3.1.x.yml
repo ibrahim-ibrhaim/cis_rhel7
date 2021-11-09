@@ -2,7 +2,6 @@
 
 - name: "3.1.2 Ensure wireless interfaces are disabled"
   block:
-
       - name: "3.1.2 Ensure wireless interfaces are disabled | Check if wifi is enabled"
         shell: nmcli radio wifi
         register: rhel_07_wifi_enabled
@@ -12,6 +11,5 @@
       - name: "3.1.2 Ensure wireless interfaces are disabled | Disable wifi if enabled"
         command: nmcli radio wifi off
         when: rhel_07_wifi_enabled is changed
-
   when:
       - rhel7cis_rule_3_1_2

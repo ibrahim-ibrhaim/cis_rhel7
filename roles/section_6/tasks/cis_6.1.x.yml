@@ -144,7 +144,7 @@
 - name: "6.1.13 Audit SUID executables"
   block:
   - name: "6.1.13 Audit SUID executables | Find all SUID executables"
-    shell: df {{ item.mount }} -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+    shell: df {{ item.mount }} -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -4000
     become: yes
     failed_when: false
     changed_when: false
@@ -171,7 +171,7 @@
 - name: "6.1.14 Audit SGID executables"
   block:
   - name: "6.1.14 Audit SGID executables | Find all SGID executables"
-    shell: df {{ item.mount }} -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000
+    shell: df {{ item.mount }} -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -2000
     become: yes
     failed_when: false
     changed_when: false

@@ -7,6 +7,7 @@
   vars:
       ansible_python_interpreter: /bin/python
   when:
+      - not rhel7cis_ypbind_required
       - rhel7cis_rule_2_3_1
 
 - name: "2.3.2 Ensure rsh client is not installed"
@@ -16,6 +17,7 @@
   vars:
       ansible_python_interpreter: /bin/python
   when:
+      - not rhel7cis_rsh_required
       - rhel7cis_rule_2_3_2
 
 - name: "2.3.3 Ensure talk client is not installed"
@@ -25,6 +27,7 @@
   vars:
       ansible_python_interpreter: /bin/python
   when:
+      - not rhel7cis_talk_required
       - rhel7cis_rule_2_3_3
 
 - name: "2.3.4 Ensure telnet client is not installed"
@@ -34,6 +37,7 @@
   vars:
       ansible_python_interpreter: /bin/python
   when:
+      - not rhel7cis_telnet_required
       - rhel7cis_rule_2_3_4
 
 - name: "2.3.5 Ensure LDAP client is not installed"
@@ -43,4 +47,5 @@
   vars:
       ansible_python_interpreter: /bin/python
   when:
+      - not rhel7cis_openldap_clients_required
       - rhel7cis_rule_2_3_5

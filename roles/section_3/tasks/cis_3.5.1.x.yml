@@ -1,9 +1,10 @@
 ---
 
 - name: "3.5.1.1 Ensure FirewallD is installed"
-  package:
-      name: firewalld
+  yum:
+      name: ['firewalld', 'iptables']
       state: present
+      update_cache: true
   when:
       - rhel7cis_rule_3_5_1_1
 

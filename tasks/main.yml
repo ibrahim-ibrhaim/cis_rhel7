@@ -56,18 +56,18 @@
             - "bootloader path set to {{ rhel7cis_bootloader_path }}"
             - "legacy boot equals {{ rhel7cis_legacy_boot }}"
 
-- name: "PRELIM | Section 1.1 | Create list of mount points"
+- name: "PRELIM | Section 1 | Create list of mount points"
   set_fact:
       mount_names: "{{ ansible_mounts | map(attribute='mount') | list }}"
 
-- name: "PRELIM | Section 4.1 | Configure System Accounting (auditd)"
+- name: "PRELIM | Section 4 | Configure System Accounting (auditd)"
   package:
       name: audit
       state: present
   vars:
       ansible_python_interpreter: /bin/python
 
-- name: "PRELIM | Section 5.1 | Configure cron"
+- name: "PRELIM | Section 5 | Configure cron"
   package:
       name: cronie
       state: present

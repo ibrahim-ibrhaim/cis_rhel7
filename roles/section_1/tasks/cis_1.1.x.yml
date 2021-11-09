@@ -54,11 +54,33 @@
   when:
       - rhel7cis_rule_1_1_6
 
+- name: |
+      "1.1.19 Ensure removable media partitions include noexec option"
+      "1.1.20 Ensure nodev option set on removable media partitions"
+      "1.1.21 Ensure nosuid option set on removable media partitions"
+  debug:
+      msg: "--> Not relevant"
+  changed_when: false
+  when:
+      - rhel7cis_rule_1_1_19 or
+        rhel7cis_rule_1_1_20 or
+        rhel7cis_rule_1_1_21
+
+- name: "1.1.22 Ensure sticky bit is set on all world-writable directories"
+  shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
+  args:
+      warn: no
+  changed_when: false
+  failed_when: false
+  when:
+      - rhel7cis_rule_1_1_22
+
 - name: "1.1.23 Disable Automounting"
   package:
       name: autofs
       state: absent
   when:
+      - not rhel7cis_allow_autofs
       - rhel7cis_rule_1_1_23
 
 - name: "1.1.24 Disable USB Storage"

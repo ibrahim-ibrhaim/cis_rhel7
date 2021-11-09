@@ -5,4 +5,5 @@
       name: xinetd
       state: absent
   when:
+      - not rhel7cis_xinetd_required
       - rhel7cis_rule_2_1_1
