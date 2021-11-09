@@ -233,6 +233,19 @@
         changed_when: no
         register: rhel7cis_3_5_2_9_outputpolicy
 
+      - name: "3.5.2.9 Ensure nftables default deny firewall policy | Check for SSH allow"
+        shell: nft list table inet "{{ rhel7cis_nft_tables_tableName }}" | grep 'ssh'
+        become: true
+        failed_when: no
+        changed_when: no
+        register: rhel7cis_3_5_2_9_sshallowcheck
+
+      - name: "3.5.2.9 Ensure nftables default deny firewall policy | Enable SSH traffic"
+        command: nft add rule inet "{{ rhel7cis_nft_tables_tableName }}" input tcp dport ssh accept
+        become: true
+        when:
+            - '"tcp dport ssh accept" not in rhel7cis_3_5_2_9_sshallowcheck.stdout'
+
       - name: "3.5.2.9 Ensure nftables default deny firewall policy | Set hook input deny policy"
         command: nft chain inet "{{ rhel7cis_nft_tables_tableName }}" input { policy drop \; }
         become: true
