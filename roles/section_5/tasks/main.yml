@@ -6,3 +6,4 @@
 - include: cis_5.4.x.yml
 - include: cis_5.5.x.yml
 - include: cis_5.6.yml
+- include: cis_5.7.yml
