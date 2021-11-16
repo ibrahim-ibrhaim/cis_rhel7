@@ -27,5 +27,3 @@
                 \g<dir>
             shell: >-4
                 \g<shell>
-  tags:
-  - always
