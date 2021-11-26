@@ -66,6 +66,7 @@
             - "{{ rhel_07_5_5_1_4_audit.stdout_lines }}"
         when:
             - rhel_07_5_5_1_4_audit.stdout | length > 0
+        ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_5_5_1_4
 
@@ -80,11 +81,13 @@
       - name: "5.5.1.5 Ensure all users last password change date is in the past | Get list of users with last changed pw date in the future"
         shell: "cat /etc/shadow | awk -F: '{if($3>{{ rhel7cis_5_5_1_5_current_unix_time.stdout }})print$1}'"
         register: rhel7cis_5_5_1_5_user_list
+        ignore_errors: "{{ ansible_check_mode }}"
 
       - name: "5.5.1.5 Ensure all users last password change date is in the past | Alert no pw change in the future exist"
         debug:
             msg: "Good News! All accounts have PW change dates that are in the past"
         when: rhel7cis_5_5_1_5_user_list.stdout | length == 0
+        ignore_errors: "{{ ansible_check_mode }}"
 
       - name: "5.5.1.5 Ensure all users last password change date is in the past | Alert on accounts with pw change in the future"
         debug:
@@ -92,6 +95,7 @@
         when:
             - rhel7cis_5_5_1_5_user_list.stdout | length > 0
             - not rhel7cis_futurepwchgdate_autofix
+        ignore_errors: "{{ ansible_check_mode }}"
 
       - name: "5.5.1.5 Ensure all users last password change date is in the past | Fix accounts with pw change in the future"
         shell: passwd --expire {{ item }}
@@ -100,6 +104,7 @@
             - rhel7cis_futurepwchgdate_autofix
         with_items:
             - "{{ rhel7cis_5_5_1_5_user_list.stdout_lines }}"
+        ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_5_5_1_5
 

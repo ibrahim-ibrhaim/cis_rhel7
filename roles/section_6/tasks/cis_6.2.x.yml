@@ -82,11 +82,13 @@
     debug:
       msg: "Good News! There are no duplicate group names in the system"
     when: group_group_check.stdout is defined
+    ignore_errors: "{{ ansible_check_mode }}"
 
   - name: "6.2.6 Ensure no duplicate group names exist | Print warning about users with duplicate group names"
     debug:
       msg: "Warning: The following group names are duplicates: {{ group_group_check.stdout_lines }}"
     when: group_group_check.stdout is not defined
+    ignore_errors: "{{ ansible_check_mode }}"
   when:
   - rhel7cis_rule_6_2_6
 
@@ -161,6 +163,7 @@
         register: dot_in_path
         changed_when: False
         failed_when: '"." in dot_in_path.stdout_lines'
+        ignore_errors: "{{ ansible_check_mode }}"
 
       - name: "6.2.10 Ensure root PATH Integrity | Alert on empty value, colon end, and dot in path"
         debug:
@@ -168,6 +171,7 @@
                 - "The following paths have an empty value: {{ path_colon.stdout_lines }}"
                 - "The following paths have colon end: {{ path_colon_end.stdout_lines }}"
                 - "The following paths have a dot in the path: {{ dot_in_path.stdout_lines }}"
+        ignore_errors: "{{ ansible_check_mode }}"
 
       - name: "6.2.10 Ensure root PATH Integrity | Determine rights and owner"
         file: >
@@ -177,6 +181,7 @@
             owner=root
             mode='o-w,g-w'
         loop: "{{ dot_in_path.stdout_lines }}"
+        ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_6_2_10
 
