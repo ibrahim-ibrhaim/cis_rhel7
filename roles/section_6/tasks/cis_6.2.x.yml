@@ -253,6 +253,7 @@
       state: absent
       dest: "~{{ item }}/.forward"
   loop: "{{ users.stdout_lines }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_6_2_15
 
