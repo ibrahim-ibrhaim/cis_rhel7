@@ -79,6 +79,8 @@
     become: yes
     failed_when: false
     changed_when: false
+    async: 7200
+    poll: 60
     register: rhel_07_6_1_10_perms_results
 
   - name: "6.1.10 Ensure no world writable files exist | Alert no world-writable files exist"
@@ -94,6 +96,8 @@
       path: '{{ item }}'
       mode: o-w
       state: touch
+    async: 7200
+    poll: 60
     with_items: "{{ rhel_07_6_1_10_perms_results.stdout_lines }}"
     when:
     - rhel_07_6_1_10_perms_results.stdout_lines is defined

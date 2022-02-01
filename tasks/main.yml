@@ -64,14 +64,14 @@
   package:
       name: audit
       state: present
-  vars:
-      ansible_python_interpreter: /bin/python
+  # vars:
+  #     ansible_python_interpreter: /bin/python
 
 - name: "PRELIM | Section 5 | Configure cron"
   package:
       name: cronie
       state: present
-  vars:
-      ansible_python_interpreter: /bin/python
+  # vars:
+  #     ansible_python_interpreter: /bin/python
 
 - include: parse_etc_passwd.yml
