@@ -81,7 +81,7 @@
     changed_when: false
     async: 7200
     poll: 60
-    register: rhel_07_6_1_10_perms_results
+    register: rhel_07_6_1_10_perms
 
   - name: "6.1.10 Ensure no world writable files exist | Alert no world-writable files exist"
     debug:
@@ -89,7 +89,7 @@
     failed_when: false
     changed_when: false
     when:
-    - rhel_07_6_1_10_perms_results.stdout is not defined
+    - rhel_07_6_1_10_perms.results is not defined
 
   - name: "6.1.10 Ensure no world writable files exist | Adjust world-writable files if they exist (Configurable)"
     file:
@@ -98,9 +98,9 @@
       state: touch
     async: 7200
     poll: 60
-    with_items: "{{ rhel_07_6_1_10_perms_results.stdout_lines }}"
+    with_items: "{{ rhel_07_6_1_10_perms.stdout_lines }}"
     when:
-    - rhel_07_6_1_10_perms_results.stdout_lines is defined
+    - rhel_07_6_1_10_perms.results is defined
     - rhel7cis_no_world_write_adjust
   when:
   - rhel7cis_rule_6_1_10
