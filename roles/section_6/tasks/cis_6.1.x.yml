@@ -162,53 +162,53 @@
 - name: "6.1.13 Audit SUID executables"
   block:
   - name: "6.1.13 Audit SUID executables | Find all SUID executables"
-    shell: df {{ item.mount }} -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+    shell: df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -4000
     become: yes
-    failed_when: false
-    changed_when: false
-    register: rhel_07_6_1_13_perms_results
-    with_items: "{{ ansible_mounts }}"
-
+    async: 7200
+    poll: 60
+    failed_when: no
+    changed_when: no
+    register: rhel_07_6_1_13_audit
+    
   - name: "6.1.13 Audit SUID executables | Alert no SUID executables exist"
     debug:
       msg: "Good news! We have not found any SUID executable files on your system"
     failed_when: false
     changed_when: false
     when:
-    - rhel_07_6_1_13_perms_results.stdout is not defined
+    - rhel_07_6_1_13_audit.results is not defined
 
-  - name: "6.1.13 Audit SUID executables | Alert SUID executables exist"
+  - name: "6.1.13 Audit SUID executables | Displaying any executable SUID files"
     debug:
-      msg: "Warning - Manual intervention is required -- SUID set on items in {{ item.item.mount }}: {{ item.stout_lines | join(', ') }}"
-    with_items: "{{ rhel_07_6_1_13_perms_results.stdout_lines }}"
+      msg: "Warning - Manual intervention is required -- SUID set on items in {{ rhel_07_6_1_13_audit.stdout_lines }}"
     when:
-    - rhel_07_6_1_13_perms_results.stdout is defined
+    - rhel_07_6_1_13_audit.results is defined
   when:
   - rhel7cis_rule_6_1_13
 
 - name: "6.1.14 Audit SGID executables"
   block:
   - name: "6.1.14 Audit SGID executables | Find all SGID executables"
-    shell: df {{ item.mount }} -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -2000
+    shell: df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -type f -perm -2000
     become: yes
-    failed_when: false
-    changed_when: false
-    register: rhel_07_6_1_14_perms_results
-    with_items: "{{ ansible_mounts }}"
-
+    async: 7200
+    poll: 60
+    failed_when: no
+    changed_when: no
+    register: rhel_07_6_1_14_audit
+    
   - name: "6.1.14 Audit SGID executables | Alert no SGID executables exist"
     debug:
       msg: "Good news! We have not found any SGID executable files on your system"
     failed_when: false
     changed_when: false
     when:
-    - rhel_07_6_1_14_perms_results.stdout is not defined
+    - rhel_07_6_1_14_audit.results is not defined
 
-  - name: "6.1.14 Audit SGID executables | Alert SGID executables exist"
+  - name: "6.1.14 Audit SGID executables | Displaying any executable SGID files"
     debug:
-      msg: "Warning - Manual intervention is required -- SGID set on items in {{ item.item.mount }}: {{ item.stout_lines | join(', ') }}"
-    with_items: "{{ rhel_07_6_1_14_perms_results.stdout_lines }}"
+      msg: "Warning - Manual intervention is required -- SGID set on items in {{ rhel_07_6_1_14_audit.stdout_lines }}"
     when:
-    - rhel_07_6_1_14_perms_results.stdout is defined
+    - rhel_07_6_1_14_audit.results is defined
   when:
   - rhel7cis_rule_6_1_14
