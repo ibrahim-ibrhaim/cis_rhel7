@@ -182,6 +182,7 @@
             mode='o-w,g-w'
         loop: "{{ dot_in_path.stdout_lines }}"
         ignore_errors: "{{ ansible_check_mode }}"
+        when: "item != \"\""
   when:
       - rhel7cis_rule_6_2_10
 
