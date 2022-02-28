@@ -11,7 +11,7 @@
   - { key: 'minclass', value: '4' }
   when:
   - rhel7cis_rule_5_4_1
-  - ansible_facts['distribution_major_version'] == "7"
+  - ansible_facts['distribution_major_version'] == "7" or ansible_facts['distribution_major_version'] == "8"
 
 - name: |
         " 5.4.2 Ensure lockout for failed password attempts is configured
