@@ -64,10 +64,12 @@
   package:
       name: audit
       state: present
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "PRELIM | Section 5 | Configure cron"
   package:
       name: cronie
       state: present
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - include: parse_etc_passwd.yml

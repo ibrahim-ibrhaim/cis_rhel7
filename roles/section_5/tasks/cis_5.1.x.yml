@@ -1,12 +1,22 @@
 ---
 
-- name: "5.1.1 Ensure cron daemon is enabled and running"
+- name: "5.1.1 Ensure cron daemon is enabled and running | RHEL or CentOS"
   service:
     name: crond
     enabled: yes
     state: started
   when:
   - rhel7cis_rule_5_1_1
+  - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "CentOS"
+
+- name: "5.1.1 Ensure cron daemon is enabled and running | Ubuntu"
+  service:
+    name: crond
+    enabled: yes
+    state: started
+  when:
+  - rhel7cis_rule_5_1_1
+  - ansible_facts['distribution'] == "Ubuntu"
 
 - name: "5.1.2 Ensure permissions on /etc/crontab are configured"
   file:
