@@ -184,3 +184,4 @@
       replace: '\1 027'
   when:
   - rhel7cis_rule_5_5_5
+  - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "CentOS"
