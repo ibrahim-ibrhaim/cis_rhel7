@@ -370,8 +370,6 @@ rhel7cis_shell_session_timeout:
   file: /etc/profile.d/tmout.sh
   timeout: 900
 
-# rhel7cis_sugroup: sugroup
-
 
 ## Section 6 varialbles
 rhel7cis_no_world_write_adjust: true
