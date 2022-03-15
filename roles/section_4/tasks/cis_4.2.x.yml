@@ -4,8 +4,6 @@
   package:
     name: "{{ rhel7cis_syslog }}"
     state: present
-  vars:
-    ansible_python_interpreter: /bin/python
   when:
     - rhel7cis_rule_4_2_1_1
 
