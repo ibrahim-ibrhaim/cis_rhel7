@@ -14,7 +14,7 @@
       register: users
     
     - name: "5.5.1.1 Ensure password expiration is 365 days or less | Modify user parameter"
-      command: chage --maxdays 365 {{ item }}
+      command: chage --maxdays 99999 {{ item }}
       loop: "{{ users.stdout_lines }}"
       ignore_errors: "{{ ansible_check_mode }}"
   when:
@@ -30,7 +30,7 @@
         line: "PASS_MIN_DAYS {{ rhel7cis_pass['min_days'] }}"
     
     - name: "5.5.1.2 Ensure minimum days between password changes is configured | Modify user parameter"
-      command: "chage --mindays 1 {{ item }}"
+      command: "chage --mindays 0 {{ item }}"
       loop: "{{ users.stdout_lines }}"
       ignore_errors: "{{ ansible_check_mode }}"
   when:

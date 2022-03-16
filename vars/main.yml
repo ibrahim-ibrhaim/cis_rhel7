@@ -167,7 +167,7 @@ rhel7cis_rule_5_5_1_1: true
 rhel7cis_rule_5_5_1_2: true
 rhel7cis_rule_5_5_1_3: true
 rhel7cis_rule_5_5_1_4: true
-rhel7cis_rule_5_5_1_5: true
+rhel7cis_rule_5_5_1_5: false
 rhel7cis_rule_5_5_2: true
 rhel7cis_rule_5_5_3: true
 rhel7cis_rule_5_5_4: true
@@ -349,7 +349,7 @@ rhel7cis_pam_faillock:
     remember: 5
     pwhash: sha512
 rhel7cis_inactivelock:
-    lock_days: 30
+    lock_days: -1
 
 # Allow ansible to expire password for account with a last changed date in the future. False will just display users in violation, true will expire those users passwords
 rhel7cis_futurepwchgdate_autofix: true
@@ -362,8 +362,8 @@ rhel7cis_inactive_whitelist:
 rhel7cis_int_gid: 1000
 
 rhel7cis_pass:
-  max_days: 365
-  min_days: 1
+  max_days: 99999
+  min_days: 0
   warn_age: 7
 
 rhel7cis_shell_session_timeout:
