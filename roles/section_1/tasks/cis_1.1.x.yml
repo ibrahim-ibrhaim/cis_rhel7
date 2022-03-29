@@ -52,6 +52,8 @@
       warn: no
   changed_when: false
   failed_when: false
+  async: 7200
+  poll: 60
   when:
       - rhel7cis_rule_1_1_22
 
