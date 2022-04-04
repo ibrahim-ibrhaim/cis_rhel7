@@ -9,11 +9,12 @@
             line: "install cramfs /bin/true"
             create: yes
             mode: '0600'
-
+      
       - name: "1.1.1.1 Remove cramfs module"
         modprobe:
             name: cramfs
             state: absent
+        ignore_errors: true
   when:
       - rhel7cis_rule_1_1_1_1
 

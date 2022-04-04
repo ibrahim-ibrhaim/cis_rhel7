@@ -4,8 +4,6 @@
   package:
       name: ypbind
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - not rhel7cis_ypbind_required
       - rhel7cis_rule_2_3_1
@@ -14,8 +12,6 @@
   package:
       name: rsh
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - not rhel7cis_rsh_required
       - rhel7cis_rule_2_3_2
@@ -24,8 +20,6 @@
   package:
       name: talk
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - not rhel7cis_talk_required
       - rhel7cis_rule_2_3_3
@@ -34,8 +28,6 @@
   package:
       name: telnet
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - not rhel7cis_telnet_required
       - rhel7cis_rule_2_3_4
@@ -44,8 +36,6 @@
   package:
       name: openldap-client
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - not rhel7cis_openldap_clients_required
       - rhel7cis_rule_2_3_5

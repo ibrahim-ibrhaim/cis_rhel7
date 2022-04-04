@@ -4,8 +4,6 @@
   package:
       name: nftables
       state: present
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - rhel7cis_rule_3_5_2_1
 
@@ -13,8 +11,6 @@
   package:
       name: firewalld
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - rhel7cis_rule_3_5_2_2
 
@@ -22,8 +18,6 @@
   package:
       name: iptables-services
       state: absent
-  vars:
-      ansible_python_interpreter: /bin/python
   when:
       - rhel7cis_rule_3_5_2_3
 
