@@ -32,6 +32,7 @@
         modprobe:
             name: udf
             state: absent
+        ignore_error: true
   when:
       - rhel7cis_rule_1_1_1_3
 
@@ -82,5 +83,6 @@
         modprobe:
             name: usb-storage
             state: absent
+        ignore_error: true
   when:
       - rhel7cis_rule_1_1_24
