@@ -153,6 +153,7 @@
     line: "ForwardToSyslog=yes"
   when:
     - rhel7cis_rule_4_2_2_1
+    - ansible_facts['distribution_major_version'] != "6"
 
 - name: "4.2.2.2 Ensure journald is configured to compress large log files"
   lineinfile:
@@ -161,6 +162,7 @@
     line: "Compress=yes"
   when:
     - rhel7cis_rule_4_2_2_2
+    - ansible_facts['distribution_major_version'] != "6"
 
 - name: "4.2.2.3 Ensure journald is configured to write logfiles to persistent disk"
   lineinfile:
@@ -169,6 +171,7 @@
     line: "Storage=persistent"
   when:
     - rhel7cis_rule_4_2_2_3
+    - ansible_facts['distribution_major_version'] != "6"
 
 - name: "4.2.3 Ensure permissions on all logfiles are configured"
   command: find /var/log -type f -exec chmod g-wx,o-rwx "{}" + -o -type d -exec chmod g-wx,o-rwx "{}" +
