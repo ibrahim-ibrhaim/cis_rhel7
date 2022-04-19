@@ -34,15 +34,23 @@
             rhel7cis_legacy_boot: false
         when:
         - rhel7cis_efi_boot.stat.exists
-        - ansible_distribution != 'CentOS'  # Note: rhel & OEL both use redhat path
+        - ansible_distribution == 'RedHat'
 
-      - name: "PRELIM | set fact if UEFI boot | CentOS "
+      - name: "PRELIM | set fact if UEFI boot | CentOS"
         set_fact:
             rhel7cis_bootloader_path: /boot/efi/EFI/centos/
             rhel7cis_legacy_boot: false
         when:
         - rhel7cis_efi_boot.stat.exists
         - ansible_distribution == 'CentOS'
+      
+      - name: "PRELIM | set fact if UEFI boot | Ubuntu"
+        set_fact:
+            rhel7cis_bootloader_path: /boot/efi/EFI/ubuntu/
+            rhel7cis_legacy_boot: false
+        when:
+        - rhel7cis_efi_boot.stat.exists
+        - ansible_distribution == 'Ubuntu'
 
       - name: "PRELIM | set if not UEFI boot"
         set_fact:

@@ -1,13 +1,13 @@
 ---
 
-- name: "1.3.1 Ensure AIDE is installed"
+- name: "1.3.1 Ensure AIDE is installed | RHEL/CentOS"
   block:
-      - name: "1.3.1 Ensure AIDE is installed | Install"
+      - name: "1.3.1 Ensure AIDE is installed | Install | RHEL/CentOS"
         package:
             name: aide
             state: installed
 
-      - name: "1.3.1 Ensure AIDE is installed | Started"
+      - name: "1.3.1 Ensure AIDE is installed | Started | RHEL/CentOS"
         shell: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
         args:
             creates: /var/lib/aide/aide.db.gz
@@ -17,7 +17,28 @@
   when:
       - rhel7cis_config_aide
       - rhel7cis_rule_1_3_1
-  
+      - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "CentOS"
+
+- name: "1.3.1 Ensure AIDE is installed | Ubuntu"
+  block:
+      - name: "1.3.1 Ensure AIDE is installed | Install | Ubuntu"
+        apt:
+            name: [ "aide-common", "aide"]
+            state: present
+            install_recommends: false
+
+      - name: "1.3.1 Ensure AIDE is installed | Started | Ubuntu"
+        shell: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
+        args:
+            creates: /var/lib/aide/aide.db.gz
+        changed_when: no
+        failed_when: no
+        async: "{{ ansible_check_mode | ternary(0, 45) }}"
+  when:
+      - rhel7cis_config_aide
+      - rhel7cis_rule_1_3_1
+      - ansible_facts['distribution'] == "Ubuntu"
+
 - name: "1.3.2 Ensure filesystem integrity is regularly checked"
   cron:
       name: Run AIDE integrity check
