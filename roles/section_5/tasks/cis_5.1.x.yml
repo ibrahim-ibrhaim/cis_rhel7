@@ -11,7 +11,7 @@
 
 - name: "5.1.1 Ensure cron daemon is enabled and running | Ubuntu"
   service:
-    name: crond
+    name: cron
     enabled: yes
     state: started
   when:
