@@ -52,11 +52,21 @@
         - rhel7cis_efi_boot.stat.exists
         - ansible_distribution == 'Ubuntu'
 
-      - name: "PRELIM | set if not UEFI boot"
+      - name: "PRELIM | set if not UEFI boot | RHEL/CentOS"
         set_fact:
             rhel7cis_bootloader_path: /boot/grub2/
             rhel7cis_legacy_boot: true
-        when: not rhel7cis_efi_boot.stat.exists
+        when: 
+        - not rhel7cis_efi_boot.stat.exists
+        - ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+      
+      - name: "PRELIM | set if not UEFI boot | Ubuntu"
+        set_fact:
+            rhel7cis_bootloader_path: /boot/grub/
+            rhel7cis_legacy_boot: true
+        when: 
+        - not rhel7cis_efi_boot.stat.exists
+        - ansible_distribution == 'Ubuntu'
 
       - name: output bootloader and efi state
         debug:
