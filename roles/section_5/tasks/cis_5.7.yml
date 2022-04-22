@@ -11,7 +11,9 @@
 - name: "5.7 Ensure access to the su command is restricted | Ubuntu"
   block:
       - name: "5.7 Ensure access to the su command is restricted | Create an empty group for use of su command"
-        shell:  groupadd sugroup
+        ansible.builtin.group:
+            name: sugroup
+            state: present
 
       - name: "5.7 Ensure access to the su command is restricted | Setting pam_wheel to use_uid"
         lineinfile:
