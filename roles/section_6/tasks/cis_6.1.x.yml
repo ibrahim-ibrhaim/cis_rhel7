@@ -81,6 +81,7 @@
     changed_when: false
     async: 7200
     poll: 60
+    ignore_errors: "{{ ansible_check_mode }}"
     register: rhel_07_6_1_10_perms
 
   - name: "6.1.10 Ensure no world writable files exist | Alert no world-writable files exist"
@@ -98,6 +99,7 @@
       state: touch
     async: 7200
     poll: 60
+    ignore_errors: "{{ ansible_check_mode }}"
     with_items: "{{ rhel_07_6_1_10_perms.stdout_lines }}"
     when:
     - rhel_07_6_1_10_perms.results is defined
@@ -114,6 +116,7 @@
     poll: 60
     failed_when: no
     changed_when: no
+    ignore_errors: "{{ ansible_check_mode }}"
     register: rhel_07_6_1_11_audit
     
   - name: "6.1.11 Ensure no unowned files or directories exist | Alert no unowned files or directories exist"
@@ -141,6 +144,7 @@
     poll: 60
     failed_when: no
     changed_when: no
+    ignore_errors: "{{ ansible_check_mode }}"
     register: rhel_07_6_1_12_audit
     
   - name: "6.1.12 Ensure no ungrouped files or directories exist | Alert no ungrouped files or directories exist"
@@ -168,6 +172,7 @@
     poll: 60
     failed_when: no
     changed_when: no
+    ignore_errors: "{{ ansible_check_mode }}"
     register: rhel_07_6_1_13_audit
     
   - name: "6.1.13 Audit SUID executables | Alert no SUID executables exist"
@@ -195,6 +200,7 @@
     poll: 60
     failed_when: no
     changed_when: no
+    ignore_errors: "{{ ansible_check_mode }}"
     register: rhel_07_6_1_14_audit
     
   - name: "6.1.14 Audit SGID executables | Alert no SGID executables exist"
