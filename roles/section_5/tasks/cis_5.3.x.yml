@@ -209,6 +209,7 @@
   - restart sshd
   when:
   - rhel7cis_rule_5_3_15
+  - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "CentOS"
 
 - name: "5.3.16 Ensure SSH Idle Timeout Interval is configured"
   block:
