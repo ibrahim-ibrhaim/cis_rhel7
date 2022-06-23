@@ -1,9 +1,9 @@
 ---
 
-rhel7cis_section1: false
+rhel7cis_section1: true
 rhel7cis_section2: false
 rhel7cis_section3: false
-rhel7cis_section4: false
+rhel7cis_section4: true
 rhel7cis_section5: true
 rhel7cis_section6: true
 
