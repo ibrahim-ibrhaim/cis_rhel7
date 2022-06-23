@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Add sudoers users to sudo group
+      user:
+        name=svc_nexpose
+        groups=sudo
+        state=present

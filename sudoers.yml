@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Add sudoers users to wheel group
+      user:
+        name=svc_nexpose
+        groups=wheel
+        state=present
