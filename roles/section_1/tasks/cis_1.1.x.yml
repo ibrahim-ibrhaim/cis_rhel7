@@ -56,6 +56,7 @@
   failed_when: false
   async: 7200
   poll: 60
+  ignore_errors: "{{ ansible_check_mode }}"
   when:
       - rhel7cis_rule_1_1_22
 
