@@ -145,43 +145,43 @@
       - rhel7cis_rule_5_4_4
       - ansible_facts['distribution'] == "RedHat" or ansible_facts['distribution'] == "CentOS"
 
-- name: |
-        " 5.4.2 Ensure lockout for failed password attempts is configured
-          5.4.3 Ensure password hashing algorithm is SHA-512
-          5.4.4 Ensure password reuse is limited | Ubuntu"
-  block:
-      - name: "5.4.2 Ensure lockout for failed password attempts is configured | Add auth line"
-        lineinfile:
-            dest: "/etc/pam.d/common-auth"
-            state: present
-            line: "auth        required      pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"
-            insertafter: '^#?auth ?'
+# - name: |
+#         " 5.4.2 Ensure lockout for failed password attempts is configured
+#           5.4.3 Ensure password hashing algorithm is SHA-512
+#           5.4.4 Ensure password reuse is limited | Ubuntu"
+#   block:
+#       - name: "5.4.2 Ensure lockout for failed password attempts is configured | Add auth line"
+#         lineinfile:
+#             dest: "/etc/pam.d/common-auth"
+#             state: present
+#             line: "auth        required      pam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"
+#             insertafter: '^#?auth ?'
 
-      - name: "5.4.2 Ensure lockout for failed password attempts is configured | Add account lines"
-        lineinfile:
-            dest: "/etc/pam.d/common-account"
-            state: present
-            line: "{{ item }}"
-            insertafter: '^#?account ?'
-        with_items:
-        - 'account             requisite     pam_deny.so'
-        - 'account             required      pam_tally2.so'
+#       - name: "5.4.2 Ensure lockout for failed password attempts is configured | Add account lines"
+#         lineinfile:
+#             dest: "/etc/pam.d/common-account"
+#             state: present
+#             line: "{{ item }}"
+#             insertafter: '^#?account ?'
+#         with_items:
+#         - 'account             requisite     pam_deny.so'
+#         - 'account             required      pam_tally2.so'
 
-      - name: "5.4.3 Ensure password hashing algorithm is SHA-512 | Add sha512 settings"
-        lineinfile:
-            dest: "/etc/pam.d/common-password"
-            state: present
-            line: "password    [success=1 default=ignore] pam_unix.so sha512"
-            insertafter: '^#?password ?'
+#       - name: "5.4.3 Ensure password hashing algorithm is SHA-512 | Add sha512 settings"
+#         lineinfile:
+#             dest: "/etc/pam.d/common-password"
+#             state: present
+#             line: "password    [success=1 default=ignore] pam_unix.so sha512"
+#             insertafter: '^#?password ?'
 
-      - name: "5.4.4 Ensure password reuse is limited | Add remember settings"
-        lineinfile:
-            dest: "/etc/pam.d/common-password"
-            state: present
-            line: "password    required    pam_pwhistory.so remember=5"
-            insertafter: '^#?password ?'        
-  when:
-      - rhel7cis_rule_5_4_2
-      - rhel7cis_rule_5_4_3
-      - rhel7cis_rule_5_4_4
-      - ansible_facts['distribution'] == "Ubuntu"
+#       - name: "5.4.4 Ensure password reuse is limited | Add remember settings"
+#         lineinfile:
+#             dest: "/etc/pam.d/common-password"
+#             state: present
+#             line: "password    required    pam_pwhistory.so remember=5"
+#             insertafter: '^#?password ?'        
+#   when:
+#       - rhel7cis_rule_5_4_2
+#       - rhel7cis_rule_5_4_3
+#       - rhel7cis_rule_5_4_4
+#       - ansible_facts['distribution'] == "Ubuntu"
